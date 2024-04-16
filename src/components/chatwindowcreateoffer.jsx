@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ServiceOffer from './serviceOffer';
+import CreateServiceOffer from './createServiceOffer';
 import { FaSearch } from 'react-icons/fa';
 import { IoCallOutline } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -8,7 +8,7 @@ import { LuSend } from "react-icons/lu";
 import { CiFaceSmile } from "react-icons/ci";
 
 
-export default function ChatWindow({ activeChat }) {
+export default function ChatWindowCreateOffer({ activeChat }) {
 
 
     const [isModalOpen, setModalOpen] = useState(false);
@@ -77,7 +77,7 @@ export default function ChatWindow({ activeChat }) {
                 ))}
             </div>
 
-            <ServiceOffer />
+            <CreateServiceOffer />
             {/* Input for sending messages */}
             <div className="flex items-center p-2">
                 <input className="flex-grow p-2 border rounded" placeholder="Type a message..." style={{ background: '#CAE9E8', borderRadius: '10px' }} />
