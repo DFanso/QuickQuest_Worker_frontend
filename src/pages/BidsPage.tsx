@@ -20,8 +20,9 @@ const services = [
 const JobPage = () => {
     return (
         <>
+
             <Navbar />
-            <div className="flex flex-col my-10 mx-4 sm:mx-20 items-center justify-center p-6 py-8 bg-teal-500 rounded-lg shadow" style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}>
+            {/* <div className="flex flex-col my-10 mx-4 sm:mx-20 items-center justify-center p-6 py-8 bg-teal-500 rounded-lg shadow" style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}>
                 <h1 className="text-xl font-bold mb-2">Create your own bid</h1>
                 <h2 className="text-base mb-8">Choose the service you want</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-8">
@@ -35,9 +36,16 @@ const JobPage = () => {
                         </button>
                     ))}
                 </div>
-            </div>
+            </div> */}
+
+            <h2 className="text-xl text-black font-medium md:mb-2 mb-0 mt-4 p-4">Recommended Bids</h2>
             <BidsList />
+
+            <BidsList />
+
+            <div className='mb-6'></div>
             <Footer />
+
         </>
     );
 };
