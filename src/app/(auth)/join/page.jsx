@@ -133,7 +133,7 @@ export default function JoinPage() {
         profileImage: userData.profileImage,
       };
   
-      const response = await axios.post('https://api.quick-quest.dfanso.dev/v1/auth/register', requestData);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/auth/register`, requestData);
       console.log('User registered:', response.data);
   
       localStorage.removeItem('tempUser');
