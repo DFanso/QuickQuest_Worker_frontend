@@ -179,7 +179,7 @@ const router = useRouter();
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-6">
           <div className='mt-6'></div>
           <h1 className="text-lg font-meduim text-black">Get Started</h1>
-          <p className="text-center text-base my-2 mb-4" style={{ color: "#02615D" }}>Welcome to QuickQuest - lets create your account</p>
+          <p className="text-center text-base my-2 mb-4" style={{ color: "#02615D" }}>Welcome to QuickQuest - lets create your account!</p>
           <div className="relative flex flex-col items-center justify-center w-24 h-24 rounded-full overflow-hidden">
             {/* Hidden file input */}
             <input type="file" id="imageUpload" className="hidden" onChange={handleImageUpload} />
