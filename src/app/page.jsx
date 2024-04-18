@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import '../styles/globals.css';
+import AuthRoute from './(auth)/AuthRoute';
 
 const OrderCard = ({ profilePic, name, task, dueDate, price }) => {
   return (
@@ -65,7 +66,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Navbar />
+    <AuthRoute>
       <div className="min-h-screen bg-gray-100 py-8">
         <h1 className="text-center text-2xl font-medium md:mb-14 mb-4 text-black">Order Dashboard</h1>
         <div className="flex md:flex-row flex-col justify-center space-x-2  md:space-x-14 mb-0">
@@ -109,7 +110,7 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
-      <Footer />
+      </AuthRoute>
     </>
   );
 };

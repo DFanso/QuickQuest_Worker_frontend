@@ -1,51 +1,55 @@
+'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyB9vm3yMZrnPfRTBAG0XRep4hcR6GCKE5s';
-
-const LocationPicker = () => {
+const LocationPicker = ({ onLocationSelect }) => {
     const [showMap, setShowMap] = useState(false);
     const mapRef = useRef(null);
-    const mapInstanceRef = useRef(null); // Ref for the map instance
-    const markerRef = useRef(null); // Ref for the marker
+    const mapInstanceRef = useRef(null);
+    const markerRef = useRef(null);
 
     useEffect(() => {
-        if (window.google && window.google.maps && window.google.maps.places) {
-            initializeMap();
-            initializeAutocomplete();
-        } else {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
-            script.async = true;
-            document.body.appendChild(script);
-            script.onload = () => {
+        if (showMap) {
+            if (window.google && window.google.maps && window.google.maps.places) {
                 initializeMap();
                 initializeAutocomplete();
-            };
+            } else {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}&libraries=places`;
+                script.async = true;
+                document.body.appendChild(script);
+                script.onload = () => {
+                    initializeMap();
+                    initializeAutocomplete();
+                };
+            }
         }
     }, [showMap]);
 
     const initializeMap = () => {
-        if (mapRef.current && !mapInstanceRef.current) {
-            const initialPosition = { lat: 0, lng: 0 };
-            mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
-                center: initialPosition,
-                zoom: 2,
-            });
+        const initialPosition = { lat: 0, lng: 0 };
+        mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
+            center: initialPosition,
+            zoom: 2,
+        });
 
-            markerRef.current = new window.google.maps.Marker({
-                position: initialPosition,
-                map: mapInstanceRef.current,
-                draggable: true,
-            });
-        }
+        markerRef.current = new window.google.maps.Marker({
+            position: initialPosition,
+            map: mapInstanceRef.current,
+            draggable: true,
+        });
+
+        markerRef.current.addListener('dragend', handleMarkerDrag);
     };
 
     const initializeAutocomplete = () => {
         const input = document.getElementById('location');
         const autocomplete = new window.google.maps.places.Autocomplete(input);
-        autocomplete.bindTo('bounds', mapInstanceRef.current);
+
+        if (mapInstanceRef.current) {
+            autocomplete.bindTo('bounds', mapInstanceRef.current);
+        }
 
         autocomplete.addListener('place_changed', () => {
             const place = autocomplete.getPlace();
@@ -70,7 +74,16 @@ const LocationPicker = () => {
         setShowMap(!showMap);
     };
 
-    const closeMap = () => {
+    const handleMarkerDrag = () => {
+        const latLng = markerRef.current.getPosition();
+        if (mapInstanceRef.current) {
+            mapInstanceRef.current.setCenter(latLng);
+        }
+    };
+
+    const confirmLocation = () => {
+        const latLng = markerRef.current.getPosition();
+        onLocationSelect({ lat: latLng.lat(), lng: latLng.lng() });
         setShowMap(false);
     };
 
@@ -93,7 +106,7 @@ const LocationPicker = () => {
             )}
             {showMap && (
                 <button
-                    onClick={closeMap}
+                    onClick={confirmLocation}
                     className="mt-0 bg-teal-500 text-white py-1 border border-green-800 w-full"
                 >
                     Confirm & Continue
