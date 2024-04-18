@@ -31,7 +31,7 @@ const PaymentMethodPage = () => {
       const token = localStorage.getItem('token');
 
       if (token) {
-        const response = await axios.get('https://api.quick-quest.dfanso.dev/v1/paypal/auth', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/paypal/auth`, {
           headers: {
             'accept': '*/*',
             'Authorization': `Bearer ${token}`,

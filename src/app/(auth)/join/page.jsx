@@ -93,7 +93,7 @@ export default function JoinPage() {
       }
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://api.quick-quest.dfanso.dev/v1/categories');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/categories`);
         setCategories(response.data);
         setSelectedCategory(response.data[0]?._id);
       } catch (error) {
