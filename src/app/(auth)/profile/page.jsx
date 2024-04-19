@@ -32,6 +32,12 @@ const LabourPublicPage = () => {
   const [locationName, setLocationName] = useState('');
   const [user, setUser] = useState(null);
 
+  const openProfilePage = (workerId) => {
+    const baseUrl = 'https://quick-quest.vercel.app/workerProfile?workerId=';
+    const profileUrl = baseUrl + workerId;
+    window.open(profileUrl, '_blank');
+  };
+
   useEffect(() => {
     const fetchWorkerProfile = async () => {
       try {
@@ -40,7 +46,7 @@ const LabourPublicPage = () => {
           const parsedUser = JSON.parse(storedUser);
           setUser(parsedUser);
         const workerId = parsedUser._id; // Replace with the actual worker ID
-        const response = await axios.get(`https://api.quick-quest.dfanso.dev/v1/workers/${workerId}/profile`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/workers/${workerId}/profile`);
         setWorker(response.data);
 
         const [longitude, latitude] = response.data.location.coordinates;
@@ -108,8 +114,11 @@ const LabourPublicPage = () => {
             {/* <button className="border-2 border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white font-semibold py-2 px-4 rounded-md w-full mt-6 md:mt-0 md:w-2/5 mb-2 transition ease-in duration-200">
               Quick Chat
             </button> */}
-            <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md w-full md:w-2/5 mb-4 transition ease-in duration-200 flex items-center justify-center">
-              <FaUser className="mr-2" /> {/* Adjust mr-2 for icon spacing */}
+            <button
+              className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md w-full md:w-2/5 mb-4 transition ease-in duration-200 flex items-center justify-center"
+              onClick={() => openProfilePage(worker._id)}
+            >
+              <FaUser className="mr-2" />
               Preview Profile
             </button>
             <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md w-full md:w-2/5 mb-4 transition ease-in duration-200 flex items-center justify-center">
