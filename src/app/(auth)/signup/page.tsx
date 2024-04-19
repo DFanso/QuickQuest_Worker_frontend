@@ -285,9 +285,7 @@ const router = useRouter();
               </p>
               <button type="submit" className="w-full bg-teal-500 text-sm text-white rounded-md py-2 mb-2 hover:bg-teal-600" disabled={loading}>
                 {loading ? (
-                 <div className="flex items-center justify-center">
                  <ThreeDots color="#4FB8B3" height={80} width={80} />
-                </div>
                 ) : (
                 'Continue'
                 )}
