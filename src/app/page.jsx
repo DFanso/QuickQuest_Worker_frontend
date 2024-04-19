@@ -53,6 +53,7 @@ const Dashboard = () => {
   const [ongoingJobsCount, setOngoingJobsCount] = useState(0);
   const [completedJobsCount, setCompletedJobsCount] = useState(0);
   const [totalEarnings, setTotalEarnings] = useState(0);
+  const [selectedTimeRange, setSelectedTimeRange] = useState('all');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -84,6 +85,25 @@ const Dashboard = () => {
 
     fetchOrders();
   }, []);
+
+  const filterOrders = (timeRange) => {
+    setSelectedTimeRange(timeRange);
+  };
+
+  const filteredOrders = orders.filter((order) => {
+    const orderedDate = new Date(order.orderedDate);
+    const currentDate = new Date();
+
+    if (selectedTimeRange === '30days') {
+      const thirtyDaysAgo = new Date(currentDate.setDate(currentDate.getDate() - 30));
+      return orderedDate >= thirtyDaysAgo;
+    } else if (selectedTimeRange === '60days') {
+      const sixtyDaysAgo = new Date(currentDate.setDate(currentDate.getDate() - 60));
+      return orderedDate >= sixtyDaysAgo;
+    }
+
+    return true;
+  });
 
   return (
     <>
@@ -117,13 +137,35 @@ const Dashboard = () => {
           </div>
 
           <div className='mx-4 sm:mx-20 mb-8'>
-          <h2 className="text-lg font-medium mt-8 mb-6" style={{ textAlign: 'left', color: 'black', paddingLeft: '10px' }}>Ongoing Orders</h2>
+  <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
+    <h2 className="text-lg font-medium text-black mb-4 sm:mb-0">Ongoing Orders</h2>
+    <div className="flex flex-wrap">
+      <button
+        className={`px-4 py-2 rounded mb-2 sm:mb-0 ${selectedTimeRange === '30days' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+        onClick={() => filterOrders('30days')}
+      >
+        Past 30 Days
+      </button>
+      <button
+        className={`px-4 py-2 rounded mx-0 sm:mx-2 mb-2 sm:mb-0 ${selectedTimeRange === '60days' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+        onClick={() => filterOrders('60days')}
+      >
+        Past 60 Days
+      </button>
+      <button
+        className={`px-4 py-2 rounded ${selectedTimeRange === 'all' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+        onClick={() => filterOrders('all')}
+      >
+        All Time
+      </button>
+    </div>
+  </div>
             {loading ? (
               <div className="flex justify-center items-center">
                 <ThreeDots color="#4FB8B3" height={80} width={80} />
               </div>
             ) : (
-              orders.map((order, index) => (
+              filteredOrders.map((order, index) => (
                 <OrderCard
                   key={index}
                   profilePic={order.customer.profileImage}
