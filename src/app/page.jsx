@@ -29,13 +29,13 @@ const getStatusColor = (status) => {
   }
 };
 
-const OrderCard = ({ profilePic, name, task, dueDate, price, status }) => {
+const OrderCard = ({ profilePic, name, task, dueDate, price, status, image }) => {
   return (
     <div className="flex flex-col sm:flex-row mt-4 mx-4 sm:mx-20 items-center justify-between p-4 bg-white rounded text-black shadow" style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)', borderRadius: '5px' }}>
       <img src={profilePic} alt={name} className="rounded-full h-12 w-12 mb-4 sm:mb-0" />
       <span>{name}</span>
       <span className="flex items-center">
-        <img src="/images/construction-icon.png" alt="Task Icon" className="h-6 w-6 mr-2" />
+        <img src={image} alt="Task Icon" className="h-6 w-6 mr-2" />
         {task}
       </span>
       <span>Due on {dueDate}</span>
@@ -58,7 +58,7 @@ const Dashboard = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('https://api.quick-quest.dfanso.dev/v1/jobs', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/jobs`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -66,7 +66,7 @@ const Dashboard = () => {
         const sortedOrders = response.data.sort((a, b) => new Date(b.orderedDate) - new Date(a.orderedDate));
         setOrders(sortedOrders);
 
-        const ongoingCount = sortedOrders.filter(order => order.status === JobStatus.Processing).length;
+        const ongoingCount = sortedOrders.filter(order => order.status === JobStatus.Pending).length;
         setOngoingJobsCount(ongoingCount);
 
         const completedCount = sortedOrders.filter(order => order.status === JobStatus.Completed).length;
@@ -129,6 +129,7 @@ const Dashboard = () => {
                   profilePic={order.customer.profileImage}
                   name={`${order.customer.firstName} ${order.customer.lastName}`}
                   task={order.service.name}
+                  image={order.service.category.iconUrl}
                   dueDate={new Date(order.deliveryDate).toLocaleDateString()}
                   price={`$${order.price}`}
                   status={order.status}
