@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CreateServiceOffer from './createServiceOffer';
+import ServiceOffer from './serviceOffer';
 import { FaSearch } from 'react-icons/fa';
 import { IoCallOutline } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -9,9 +9,8 @@ import { CiFaceSmile } from "react-icons/ci";
 import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
 import { IoChevronBack } from "react-icons/io5";
-import ServiceOffer from './serviceOffer';
 
-export default function ChatWindowCreateOffer({ activeChat, onBack }) {
+export default function ChatWindow({ activeChat, onBack }) {
     const [isModalOpen, setModalOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +20,7 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
     const storedUser = localStorage.getItem('user');
     const parsedUser = JSON.parse(storedUser);
 
-    console.log(activeChat);
+    console.log(activeChat)
 
     const openModal = () => {
         setModalOpen(true);
@@ -64,6 +63,7 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
         }
     }, [activeChat]);
 
+
     const handleBack = () => {
         if (onBack) {
             onBack();
@@ -76,6 +76,8 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
         </div>;
     }
 
+
+
     return (
         <div className="flex md:text-base text-xs m-2 flex-col w-full p-2 md:p-4" style={{ boxShadow: '0px 0px 4px 2px rgba(79, 184, 179, 0.25)', borderRadius: '10px', height: "90%" }}>
             {/* Chat header */}
@@ -86,8 +88,8 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
                         <button onClick={handleBack} className="text-teal-500 mr-2">
                             <IoChevronBack className='text-2xl' />
                         </button>
-                        <img className="w-10 h-10 rounded-full mr-2" src={activeChat.worker.profileImage} alt={`${activeChat.worker.firstName} ${activeChat.worker.lastName}`} />
-                        <h2 className="font-semibold text-teal-900">{activeChat.worker.firstName} {activeChat.worker.lastName}</h2>
+                        <img className="w-10 h-10 rounded-full mr-2" src={activeChat.customer.profileImage} alt={`${activeChat.customer.firstName} ${activeChat.customer.lastName}`} />
+                        <h2 className="font-semibold text-teal-900">{activeChat.customer.firstName} {activeChat.customer.lastName}</h2>
                     </div>
                     {/* Icons */}
                     <div className="flex items-center">
@@ -100,26 +102,34 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
 
             {/* Chat messages */}
             <div className="flex-grow overflow-auto p-2">
-            {messages.map((message) => (
-                <div
-                    key={message._id}
-                    className={`flex items-end ${message.sender === parsedUser._id ? 'justify-end' : 'justify-start'}`}
-                >
-                    {message.contentType === 'OFFER' ? (
-                    <ServiceOffer
-                        offer={message.content}
-                    />
-                    ) : (
-                    <div className={`max-w-2/3 p-2 my-1 rounded-lg ${message.sender === parsedUser._id ? 'bg-teal-600' : 'bg-teal-400'}`}>
-                        <p className="text-sm">{message.content}</p>
-                        <p className="text-xs text-gray-300 text-right">{new Date(message.timestamp).toLocaleString()}</p>
+                {messages.map((message) => (
+                    <div
+                        key={message._id}
+                        className={`flex items-end ${message.sender === parsedUser._id ? 'justify-end' : 'justify-start'}`}
+                    >
+                        {message.contentType === 'OFFER' ? (
+                            <ServiceOffer
+                                offer={{
+                                    service: message.content.service,
+                                    worker: message.content.worker,
+                                    price: message.content.price,
+                                    description: message.content.description,
+                                    deliveryDate: message.content.deliveryDate,
+                                    expireDate: message.content.expireDate,
+                                    icon: message.content.service.category.iconUrl,
+                                    status: message.content.status,
+                                    _id: message.content._id,
+                                }}
+                            />
+                        ) : (
+                            <div className={`max-w-2/3 p-2 my-1 rounded-lg ${message.sender === parsedUser._id ? 'bg-teal-600' : 'bg-teal-400'}`}>
+                                <p className="text-sm">{message.content}</p>
+                                <p className="text-xs text-gray-300 text-right">{new Date(message.timestamp).toLocaleString()}</p>
+                            </div>
+                        )}
                     </div>
-                    )}
-                </div>
                 ))}
             </div>
-
-            <CreateServiceOffer />
 
             {/* Input for sending messages */}
             <div className="flex items-center p-2">

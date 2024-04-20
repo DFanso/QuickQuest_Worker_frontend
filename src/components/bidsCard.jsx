@@ -80,7 +80,7 @@ const BidCard = ({ title, description, expireDate, budget, imageUrl, customerId 
         <div className="font-medium text-black text-lg mb-2">{title}</div>
         <p className="text-gray-700 text-base">{description}</p>
         <p className="text-gray-600 text-base font-medium mt-2">Expiry Date: {formatDate(expireDate)}</p>
-        <p className="text-gray-600 text-base font-medium">Budget: {budget}</p>
+        <p className="text-gray-600 text-base font-medium">Budget: ${budget}</p>
         <div className='flex items-center justify-center'>
           <button
             className="w-2/4 bg-teal-500 text-sm text-white rounded-md py-2 mb-2 hover:bg-teal-600 mt-4"
