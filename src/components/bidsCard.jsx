@@ -32,7 +32,7 @@ const BidCard = ({ title, description, expireDate, budget, imageUrl, customerId 
         const workerId = user._id;
 
         // Create the chat
-        const chatResponse = await axios.post('https://api.quick-quest.dfanso.dev/v1/chats', {
+        const chatResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/chats`, {
           workerId,
           customerId
         }, {
@@ -45,7 +45,7 @@ const BidCard = ({ title, description, expireDate, budget, imageUrl, customerId 
         const chatId = chatResponse.data.chatId;
 
         // Send a message regarding the bid to the customer
-        await axios.post(`https://api.quick-quest.dfanso.dev/v1/chats/${chatId}/messages`, {
+        await axios.post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/chats/${chatId}/messages`, {
           contentType: 'TEXT',
           content: `Hello, I'm interested in your bid "${description}". Let's discuss further.`
         }, {
@@ -168,7 +168,7 @@ const App = () => {
     const fetchBids = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('https://api.quick-quest.dfanso.dev/v1/bids/matching', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/bids/matching`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
