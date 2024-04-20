@@ -9,6 +9,7 @@ import { CiFaceSmile } from "react-icons/ci";
 import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
 import { IoChevronBack } from "react-icons/io5";
+import CreateServiceOffer from './createServiceOffer';
 
 export default function ChatWindow({ activeChat, onBack }) {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -16,6 +17,7 @@ export default function ChatWindow({ activeChat, onBack }) {
     const [isLoading, setIsLoading] = useState(false);
     const [newMessage, setNewMessage] = useState('');
     const [sseConnection, setSseConnection] = useState(null);
+    const [aChat, setAChat] = useState(null);
 
     const storedUser = localStorage.getItem('user');
     const parsedUser = JSON.parse(storedUser);
@@ -55,6 +57,7 @@ export default function ChatWindow({ activeChat, onBack }) {
             sse.onmessage = (event) => {
                 const data = JSON.parse(event.data);
                 setMessages(data.messages);
+                setAChat(activeChat._id)
             };
 
             return () => {
@@ -130,6 +133,7 @@ export default function ChatWindow({ activeChat, onBack }) {
                     </div>
                 ))}
             </div>
+            <CreateServiceOffer aChat={aChat}/>
 
             {/* Input for sending messages */}
             <div className="flex items-center p-2">

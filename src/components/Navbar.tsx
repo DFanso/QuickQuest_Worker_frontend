@@ -9,9 +9,11 @@ const Navbar = () => {
 
     return (
         <nav className="flex items-center justify-between p-4 shadow-md relative">
+            <Link href="/">
             <div className="text-3xl font-bold text-teal-500">
                 QuickQuest
             </div>
+            </Link>
             <div className="hidden md:flex space-x-10">
                 <Link href="/">
                     <span className="text-black hover:text-teal-500 text-base transition duration-500">Home</span>
@@ -23,11 +25,8 @@ const Navbar = () => {
                     <span className="text-black hover:text-teal-500 text-base transition duration-500">Login</span>
                 </Link>
                 <Link href="/signup">
-                    <span className="text-black hover:text-teal-500 text-base transition duration-500">Sign-up</span>
+                    <span className="text-black hover:text-teal-500 text-base transition duration-500 mr-6">Sign-up</span>
                 </Link>
-                <button className="bg-teal-500 text-white px-6 py-1 text-base rounded-2xl">
-                    Join Us
-                </button>
             </div>
             <div className="md:hidden flex items-center">
                 {!isMenuOpen && (
@@ -67,12 +66,6 @@ const Navbar = () => {
                             <Link href="/signup">
                                 <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Sign-up</span>
                             </Link>
-
-                            <div>
-                                <button className="bg-teal-500 text-white block w-full px-5 py-3 text-lg md:text-xl mt-6 md:mt-0 rounded-2xl">
-                                    Join Us
-                                </button>
-                            </div>
                         </div>
                     </div>
                 )}
