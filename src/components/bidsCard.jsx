@@ -3,13 +3,76 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-const BidCard = ({ title, description, expireDate, budget, imageUrl }) => {
+const BidCard = ({ title, description, expireDate, budget, imageUrl, customerId }) => {
+  const router = useRouter();
+
+  const handleContactCustomer = async () => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to contact the customer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, contact customer!'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user'));
+        const workerId = user._id;
+
+        // Create the chat
+        const chatResponse = await axios.post('https://api.quick-quest.dfanso.dev/v1/chats', {
+          workerId,
+          customerId
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const chatId = chatResponse.data.chatId;
+
+        // Send a message regarding the bid to the customer
+        await axios.post(`https://api.quick-quest.dfanso.dev/v1/chats/${chatId}/messages`, {
+          contentType: 'TEXT',
+          content: `Hello, I'm interested in your bid "${description}". Let's discuss further.`
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        Swal.fire(
+          'Message Sent!',
+          'You have successfully contacted the customer.',
+          'success'
+        ).then(() => {
+          router.push('/chat');
+        });
+      } catch (error) {
+        console.error('Error contacting customer:', error);
+        Swal.fire(
+          'Error',
+          'An error occurred while contacting the customer.',
+          'error'
+        );
+      }
+    }
+  };
+
   return (
     <div className="max-w-sm rounded-xl overflow-hidden shadow-lg bg-white m-4">
       <img className="w-full" src={imageUrl} alt={title} />
@@ -17,9 +80,12 @@ const BidCard = ({ title, description, expireDate, budget, imageUrl }) => {
         <div className="font-medium text-black text-lg mb-2">{title}</div>
         <p className="text-gray-700 text-base">{description}</p>
         <p className="text-gray-600 text-base font-medium mt-2">Expiry Date: {formatDate(expireDate)}</p>
-        <p className="text-gray-600 text-base font-medium">Budget: ${budget}</p>
+        <p className="text-gray-600 text-base font-medium">Budget: {budget}</p>
         <div className='flex items-center justify-center'>
-          <button className="w-2/4 bg-teal-500 text-sm text-white rounded-md py-2 mb-2 hover:bg-teal-600 mt-4">
+          <button
+            className="w-2/4 bg-teal-500 text-sm text-white rounded-md py-2 mb-2 hover:bg-teal-600 mt-4"
+            onClick={handleContactCustomer}
+          >
             Contact Customer
           </button>
         </div>
@@ -70,6 +136,7 @@ const BidsList = ({ bids, category, iconUrl }) => {
                 expireDate={bid.expireDate}
                 budget={bid.budget}
                 imageUrl={bid.service.imageUrl}
+                customerId={bid.customer._id}
               />
             </div>
           ))}
@@ -85,6 +152,7 @@ const BidsList = ({ bids, category, iconUrl }) => {
               expireDate={bid.expireDate}
               budget={bid.budget}
               imageUrl={bid.service.imageUrl}
+              customerId={bid.customer._id}
             />
           ))}
         </div>
