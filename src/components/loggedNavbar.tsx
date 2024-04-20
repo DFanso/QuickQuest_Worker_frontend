@@ -13,9 +13,11 @@ const LoggedNavbar = () => {
 
   return (
     <nav className="flex items-center justify-between p-4 shadow-md relative">
+      <Link href="/">
       <div className="text-3xl font-bold text-teal-500">
         QuickQuest
       </div>
+      </Link>
       <div className="hidden md:flex space-x-10">
         <Link href="/">
           <span className="text-black hover:text-teal-500 text-base transition duration-500">Home</span>
@@ -24,10 +26,10 @@ const LoggedNavbar = () => {
           <span className="text-black hover:text-teal-500 text-base transition duration-500">Bids</span>
         </Link>
         <Link href="/chat">
-          <div><TiMessages className='text-gray-500 text-2xl hover:text-teal-500 duration-500' /></div>
+          <div><TiMessages className='text-gray-500 text-2xl hover:text-teal-500 duration-500'/></div>
         </Link>
         <Link href="/profile">
-          <div><CgProfile className='text-gray-500 text-2xl hover:text-teal-500 duration-500' /></div>
+          <div><CgProfile className='text-gray-500 text-2xl hover:text-teal-500 duration-500 mr-6' /></div>
         </Link>
       </div>
       <div className="md:hidden flex items-center">

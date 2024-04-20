@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPercent } from '@fortawesome/free-solid-svg-icons';
 import ChooseServiceOffer from './chooseServiceOffer';
 
-export default function CreateServiceOffer() {
+export default function CreateServiceOffer({aChat}) {
     const [showAnotherComponent, setShowAnotherComponent] = useState(false);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function CreateServiceOffer() {
     };
 
     if (showAnotherComponent) {
-        return <ChooseServiceOffer />;
+        return <ChooseServiceOffer aChat={aChat}/>;
     }
 
     // Otherwise, render the button to create an offer
