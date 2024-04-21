@@ -14,6 +14,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { ThreeDots } from 'react-loader-spinner';
 import axios from 'axios';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 
 const getLocationName = async (latitude, longitude) => {
@@ -25,6 +26,26 @@ const getLocationName = async (latitude, longitude) => {
   } catch (error) {
     console.error('Error fetching location name:', error);
     return '';
+  }
+};
+
+
+const handleLogout = async () => {
+  const result = await Swal.fire({
+    title: 'Logout',
+    text: 'Are you sure you want to log out?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, log out',
+    cancelButtonText: 'Cancel',
+  });
+
+  if (result.isConfirmed) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href ='/';
   }
 };
 
@@ -141,7 +162,7 @@ const LabourPublicPage = () => {
               </button>
             </Link>
 
-            <Link href="">
+            <Link href="/bids">
               <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-8 rounded-md w-full  mb-4 transition ease-in duration-200 flex items-center justify-center">
                 <FontAwesomeIcon icon={faEye} className="mr-2" />
                 View Bids
@@ -149,14 +170,8 @@ const LabourPublicPage = () => {
             </Link>
 
             <Link href="">
-              <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-8 rounded-md w-full mb-4 transition ease-in duration-200 flex items-center justify-center">
-                <FontAwesomeIcon icon={faEye} className="mr-2" />
-                View Bids
-              </button>
-            </Link>
-
-            <Link href="">
-              <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-10 rounded-md w-full  mb-4 transition ease-in duration-200 flex items-center justify-center">
+              <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-10 rounded-md w-full  mb-4 transition ease-in duration-200 flex items-center justify-center"
+               onClick={handleLogout}>
                 <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                 Log Out
               </button>
