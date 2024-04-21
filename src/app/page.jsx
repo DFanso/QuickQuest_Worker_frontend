@@ -32,7 +32,7 @@ const getStatusColor = (status) => {
 const OrderCard = ({ profilePic, name, task, dueDate, price, status, image }) => {
   return (
     <div className="flex flex-col sm:flex-row mt-4 mx-4 sm:mx-20 items-center justify-between p-4 bg-white rounded text-black shadow" style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)', borderRadius: '5px' }}>
-      <img src={profilePic} alt={name} className="rounded-full h-12 w-12 mb-4 sm:mb-0" />
+      <img src={profilePic} alt={name} className="rounded-full h-12 w-12 mb-4 sm:mb-0 object-cover" />
       <span>{name}</span>
       <span className="flex items-center">
         <img src={image} alt="Task Icon" className="h-6 w-6 mr-2" />
