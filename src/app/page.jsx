@@ -137,29 +137,29 @@ const Dashboard = () => {
           </div>
 
           <div className='mx-4 sm:mx-20 mb-8'>
-  <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
-    <h2 className="text-lg font-medium text-black mb-4 sm:mb-0">Ongoing Orders</h2>
-    <div className="flex flex-wrap">
-      <button
-        className={`px-4 py-2 rounded mb-2 sm:mb-0 ${selectedTimeRange === '30days' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-        onClick={() => filterOrders('30days')}
-      >
-        Past 30 Days
-      </button>
-      <button
-        className={`px-4 py-2 rounded mx-0 sm:mx-2 mb-2 sm:mb-0 ${selectedTimeRange === '60days' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-        onClick={() => filterOrders('60days')}
-      >
-        Past 60 Days
-      </button>
-      <button
-        className={`px-4 py-2 rounded ${selectedTimeRange === 'all' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-        onClick={() => filterOrders('all')}
-      >
-        All Time
-      </button>
-    </div>
-  </div>
+            <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
+              <h2 className="text-lg font-medium text-black mb-4 md:mt-0 mt-6 sm:mb-0">Ongoing Orders</h2>
+              <div className="flex flex-wrap mt-0 md:mt-8">
+                <button
+                  className={`px-4 py-2 rounded mr-2  ${selectedTimeRange === '30days' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                  onClick={() => filterOrders('30days')}
+                >
+                  Past 30 Days
+                </button>
+                <button
+                  className={`px-4 py-2 rounded mx-0 mr-2  ${selectedTimeRange === '60days' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                  onClick={() => filterOrders('60days')}
+                >
+                  Past 60 Days
+                </button>
+                <button
+                  className={`px-4 py-2  rounded ${selectedTimeRange === 'all' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                  onClick={() => filterOrders('all')}
+                >
+                  All Time
+                </button>
+              </div>
+            </div>
             {loading ? (
               <div className="flex justify-center items-center">
                 <ThreeDots color="#4FB8B3" height={80} width={80} />

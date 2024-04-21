@@ -53,7 +53,7 @@ export default function ChatWindow({ activeChat }) {
                 <div className="flex justify-between items-center p-2 border-b border-gray-300">
                     {/* User profile and name */}
                     <div className="flex items-center">
-                        <img className="w-10 h-10 rounded-full mr-2" src={`/images/chat-profile.png`} alt={activeChat.name} />
+                        <img className="w-10 h-10 rounded-full mr-2 object-cover" src={`/images/chat-profile.png`} alt={activeChat.name} />
                         <h2 className="font-semibold text-teal-900">{activeChat.name}</h2>
                     </div>
                     {/* Icons */}

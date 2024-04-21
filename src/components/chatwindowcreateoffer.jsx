@@ -102,26 +102,26 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
 
             {/* Chat messages */}
             <div className="flex-grow overflow-auto p-2">
-            {messages.map((message) => (
-                <div
-                    key={message._id}
-                    className={`flex items-end ${message.sender === parsedUser._id ? 'justify-end' : 'justify-start'}`}
-                >
-                    {message.contentType === 'OFFER' ? (
-                    <ServiceOffer
-                        offer={message.content}
-                    />
-                    ) : (
-                    <div className={`max-w-2/3 p-2 my-1 rounded-lg ${message.sender === parsedUser._id ? 'bg-teal-600' : 'bg-teal-400'}`}>
-                        <p className="text-sm">{message.content}</p>
-                        <p className="text-xs text-gray-300 text-right">{new Date(message.timestamp).toLocaleString()}</p>
+                {messages.map((message) => (
+                    <div
+                        key={message._id}
+                        className={`flex items-end ${message.sender === parsedUser._id ? 'justify-end' : 'justify-start'}`}
+                    >
+                        {message.contentType === 'OFFER' ? (
+                            <ServiceOffer
+                                offer={message.content}
+                            />
+                        ) : (
+                            <div className={`max-w-2/3 p-2 my-1 rounded-lg ${message.sender === parsedUser._id ? 'bg-teal-600' : 'bg-teal-400'}`}>
+                                <p className="text-sm">{message.content}</p>
+                                <p className="text-xs text-gray-300 text-right">{new Date(message.timestamp).toLocaleString()}</p>
+                            </div>
+                        )}
                     </div>
-                    )}
-                </div>
                 ))}
             </div>
 
-            <CreateServiceOffer aChat={aChat}/>
+            <CreateServiceOffer aChat={aChat} />
 
             {/* Input for sending messages */}
             <div className="flex items-center p-2">

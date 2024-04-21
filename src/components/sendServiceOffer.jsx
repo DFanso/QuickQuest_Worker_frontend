@@ -156,7 +156,7 @@ export default function SendServiceOffer({ service, onClose, aChat }) {
     }
 
     return (
-        <div className="w-3/5 px-4 py-2 bg-white rounded-lg shadow-md my-2 relative" style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)', borderRadius: '10px', background: '#FFF' }}>
+        <div className="w-full md:w-3/5 px-2 px-4 py-2 bg-white rounded-lg shadow-md my-2 relative" style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)', borderRadius: '10px', background: '#FFF' }}>
             <button
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
                 onClick={handleClose}
@@ -168,6 +168,7 @@ export default function SendServiceOffer({ service, onClose, aChat }) {
                     <FontAwesomeIcon icon={faPercent} className="text-teal-500" size="1.5em" />
                     <span className="ml-2 text-teal-500">Create an offer for {service.name}</span>
                 </div>
+
             </div>
 
             <div className="items-center">

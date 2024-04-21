@@ -11,12 +11,16 @@ const LoggedNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuth();
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="flex items-center justify-between p-4 shadow-md relative">
       <Link href="/">
-      <div className="text-3xl font-bold text-teal-500">
-        QuickQuest
-      </div>
+        <div className="text-3xl font-bold text-teal-500">
+          QuickQuest
+        </div>
       </Link>
       <div className="hidden md:flex space-x-10">
         <Link href="/">
@@ -26,7 +30,7 @@ const LoggedNavbar = () => {
           <span className="text-black hover:text-teal-500 text-base transition duration-500">Bids</span>
         </Link>
         <Link href="/chat">
-          <div><TiMessages className='text-gray-500 text-2xl hover:text-teal-500 duration-500'/></div>
+          <div><TiMessages className='text-gray-500 text-2xl hover:text-teal-500 duration-500' /></div>
         </Link>
         <Link href="/profile">
           <div><CgProfile className='text-gray-500 text-2xl hover:text-teal-500 duration-500 mr-6' /></div>
@@ -59,16 +63,16 @@ const LoggedNavbar = () => {
             </div>
             <div className="px-5 py-2">
               <Link href="/">
-                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Home</span>
+                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Home</span>
               </Link>
               <Link href="/bids">
-                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Bids</span>
+                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Bids</span>
               </Link>
               <Link href="/chat">
-                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Chat</span>
+                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Chat</span>
               </Link>
               <Link href="/profile">
-                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Profile</span>
+                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Profile</span>
               </Link>
             </div>
           </div>

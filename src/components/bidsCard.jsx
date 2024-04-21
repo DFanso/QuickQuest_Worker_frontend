@@ -97,7 +97,7 @@ const BidCard = ({ title, description, expireDate, budget, imageUrl, customerId 
 const BidsList = ({ bids, category, iconUrl }) => {
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: bids.length > 1,  // Only set infinite to true if there are more than one bid
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -107,13 +107,13 @@ const BidsList = ({ bids, category, iconUrl }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          infinite: true,
+          infinite: bids.length > 1,  // Apply the same logic here for mobile responsiveness
           dots: true
         }
       },
       {
         breakpoint: 769,
-        settings: "unslick"
+        settings: "unslick" // Consider managing or adjusting this if needed
       }
     ]
   };

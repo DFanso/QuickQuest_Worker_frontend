@@ -7,12 +7,16 @@ import { FaBars, FaTimes } from 'react-icons/fa'; // Importing FontAwesome icons
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
+
     return (
         <nav className="flex items-center justify-between p-4 shadow-md relative">
             <Link href="/">
-            <div className="text-3xl font-bold text-teal-500">
-                QuickQuest
-            </div>
+                <div className="text-3xl font-bold text-teal-500">
+                    QuickQuest
+                </div>
             </Link>
             <div className="hidden md:flex space-x-10">
                 <Link href="/">
@@ -55,16 +59,16 @@ const Navbar = () => {
                         </div>
                         <div className="px-5 py-2">
                             <Link href="/">
-                                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Home</span>
+                                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Home</span>
                             </Link>
                             <Link href="/bids">
-                                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Bids</span>
+                                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Bids</span>
                             </Link>
                             <Link href="/login">
-                                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Login</span>
+                                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Login</span>
                             </Link>
                             <Link href="/signup">
-                                <span className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Sign-up</span>
+                                <span onClick={closeMenu} className="text-black hover:text-teal-500 block px-3 py-2 text-xl font-medium">Sign-up</span>
                             </Link>
                         </div>
                     </div>
