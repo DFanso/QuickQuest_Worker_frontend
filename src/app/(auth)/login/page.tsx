@@ -55,23 +55,23 @@ export default function Login() {
         event.currentTarget.email.value,
         event.currentTarget.password.value
       );
-      
-      const fetchedUser = await fetchUserProfile(token);
-    if (fetchedUser.type === 'CUSTOMER') {
-      router.push('https://quick-quest.vercel.app/login');
-    } else {
-      setUser(fetchedUser);
-      localStorage.setItem('token', token);
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'You have successfully logged in.',
-        confirmButtonColor: '#14b8a6',
-      }).then(() => {
-        router.push('/');
-      });
-    }
+      const fetchedUser = await fetchUserProfile(token);
+      if (fetchedUser.type === 'CUSTOMER') {
+        router.push('https://quick-quest.vercel.app/login');
+      } else {
+        setUser(fetchedUser);
+        localStorage.setItem('token', token);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful',
+          text: 'You have successfully logged in.',
+          confirmButtonColor: '#14b8a6',
+        }).then(() => {
+          router.push('/');
+        });
+      }
     } catch (error) {
       console.error('Login failed:', error);
       Swal.fire({
@@ -112,9 +112,8 @@ export default function Login() {
                       type="email"
                       autoComplete="email"
                       required
-                      className={`appearance-none relative block w-full px-3 py-2 border ${
-                        errors.email ? 'border-red-500' : 'border-gray-300'
-                      } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm mb-4`}
+                      className={`appearance-none relative block w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'
+                        } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm mb-4`}
                       placeholder="Email"
                     />
                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -127,9 +126,8 @@ export default function Login() {
                       type="password"
                       autoComplete="current-password"
                       required
-                      className={`appearance-none relative block w-full px-3 py-2 border ${
-                        errors.password ? 'border-red-500' : 'border-gray-300'
-                      } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm`}
+                      className={`appearance-none relative block w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'
+                        } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm`}
                       placeholder="Password"
                     />
                     {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
@@ -166,20 +164,20 @@ export default function Login() {
                 </div>
               </form>
             )}
-           
-              <div className="mt-4">
-                <p className="text-center text-sm text-gray-600">
-                  Do not have an account?
-                  <Link href="/signup">
-                    <span className="ml-1 font-medium text-teal-600 hover:text-teal-500 cursor-pointer">
-                      Sign up
-                    </span>
-                  </Link>
-                </p>
-              </div>
+
+            <div className="mt-4">
+              <p className="text-center text-sm text-gray-600">
+                Do not have an account?
+                <Link href="/signup">
+                  <p className="ml-1 font-medium text-teal-600 hover:text-teal-500 cursor-pointer">
+                    Sign up
+                  </p>
+                </Link>
+              </p>
             </div>
           </div>
         </div>
+      </div>
     </>
   );
 }

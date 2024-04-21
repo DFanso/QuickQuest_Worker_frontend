@@ -41,7 +41,7 @@ export default function ChatPage() {
         </Head>
         <div className='h-screen'>
           {/* Ensure the sidebar takes the full screen width on mobile */}
-          <div className="md:hidden h-screen w-screen px-0 py-0 m-0">
+          <div className="md:hidden h-screen w-screen px-0 py-0 m-0" >
             <MobileChatSidebar chats={chats} onSelectChat={setActiveChat} activeChat={activeChat} />
           </div>
 
@@ -50,7 +50,7 @@ export default function ChatPage() {
             <ChatSidebar chats={chats} onSelectChat={setActiveChat} />
             <div className='mb-4 w-3/5' style={{ height: "90%" }}>
               <ChatWindowCreateOffer activeChat={activeChat} />
-              
+
             </div>
           </div>
         </div>

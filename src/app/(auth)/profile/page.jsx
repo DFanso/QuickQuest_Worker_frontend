@@ -13,6 +13,8 @@ import { faUserPen } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { ThreeDots } from 'react-loader-spinner';
 import axios from 'axios';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
 
 const getLocationName = async (latitude, longitude) => {
   try {
@@ -27,6 +29,10 @@ const getLocationName = async (latitude, longitude) => {
 };
 
 const LabourPublicPage = () => {
+
+
+
+
   const [worker, setWorker] = useState(null);
   const [loading, setLoading] = useState(true);
   const [locationName, setLocationName] = useState('');
@@ -42,9 +48,9 @@ const LabourPublicPage = () => {
     const fetchWorkerProfile = async () => {
       try {
         const storedUser = localStorage.getItem('user');
- 
-          const parsedUser = JSON.parse(storedUser);
-          setUser(parsedUser);
+
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
         const workerId = parsedUser._id; // Replace with the actual worker ID
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/workers/${workerId}/profile`);
         setWorker(response.data);
@@ -97,6 +103,10 @@ const LabourPublicPage = () => {
                 <FaMapMarkerAlt className="text-teal-500 mr-1" />
                 <span className='text-black text-sm'>{locationName}</span>
               </div>
+
+
+
+
               <div className="flex">
                 {[...new Set(worker.services.map(service => service.category.iconUrl))].map((iconUrl, i) => (
                   <img key={i} src={iconUrl} alt="Service" className="h-5 w-5 mr-2" />
@@ -114,21 +124,46 @@ const LabourPublicPage = () => {
             {/* <button className="border-2 border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white font-semibold py-2 px-4 rounded-md w-full mt-6 md:mt-0 md:w-2/5 mb-2 transition ease-in duration-200">
               Quick Chat
             </button> */}
-            <button
-              className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md w-full md:w-2/5 mb-4 transition ease-in duration-200 flex items-center justify-center"
-              onClick={() => openProfilePage(worker._id)}
-            >
-              <FaUser className="mr-2" />
-              Preview Profile
-            </button>
-            <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md w-full md:w-2/5 mb-4 transition ease-in duration-200 flex items-center justify-center">
-              <FontAwesomeIcon icon={faUserPen} className="mr-2" />
-              Edit Profile
-            </button>
-            <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md w-full md:w-2/5 mb-4 transition ease-in duration-200 flex items-center justify-center">
-              <FontAwesomeIcon icon={faEye} className="mr-2" />
-              View Bids
-            </button>
+            <Link href="">
+              <button
+                className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md w-full mb-4 transition ease-in duration-200 flex items-center justify-center"
+                onClick={() => openProfilePage(worker._id)}
+              >
+                <FaUser className="mr-2" />
+                Preview Profile
+              </button>
+            </Link>
+
+            <Link href="/editProfile">
+              <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-8 rounded-md w-full md:full mb-4 transition ease-in duration-200 flex items-center justify-center">
+                <FontAwesomeIcon icon={faUserPen} className="mr-2" />
+                Edit Profile
+              </button>
+            </Link>
+
+            <Link href="">
+              <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-8 rounded-md w-full  mb-4 transition ease-in duration-200 flex items-center justify-center">
+                <FontAwesomeIcon icon={faEye} className="mr-2" />
+                View Bids
+              </button>
+            </Link>
+
+            <Link href="">
+              <button className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-2 px-8 rounded-md w-full mb-4 transition ease-in duration-200 flex items-center justify-center">
+                <FontAwesomeIcon icon={faEye} className="mr-2" />
+                View Bids
+              </button>
+            </Link>
+
+            <Link href="">
+              <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-10 rounded-md w-full  mb-4 transition ease-in duration-200 flex items-center justify-center">
+                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+                Log Out
+              </button>
+            </Link>
+
+
+
             {/* <span className="text-sm text-gray-600">Average Response Time: 1hr</span> */}
           </div>
           {/* Intentionally left blank for spacing */}
@@ -143,7 +178,7 @@ const LabourPublicPage = () => {
 
 
       </div>
-      <CustomerFeedback feedbacks={worker.feedbacks}/>
+      <CustomerFeedback feedbacks={worker.feedbacks} />
     </>
   );
 };

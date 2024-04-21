@@ -23,7 +23,7 @@ export default function MobileChatSidebar({ chats, onSelectChat }) {
             <div className="flex-grow ">
               <div className="flex justify-between items-center">
                 <span className="font-semibold" style={{ color: '#173735' }}>{chat.customer.firstName} {chat.customer.lastName}</span>
-                <span className="md:text-sm text-xs" style={{ color: '#828282' }}>{new Date(chat.updatedAt).toLocaleString()}</span>
+                <span className=" text-xs" style={{ color: '#828282' }}>{new Date(chat.updatedAt).toLocaleString()}</span>
               </div>
               {chat.messages.length > 0 && (
                 <p className="text-sm text-gray-500">
