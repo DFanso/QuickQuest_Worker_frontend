@@ -5,6 +5,9 @@ import ChooseServiceOffer from './chooseServiceOffer';
 
 export default function CreateServiceOffer({aChat}) {
     const [showAnotherComponent, setShowAnotherComponent] = useState(false);
+    const [activeChat, setActiveChat] = useState('');
+
+   
 
     useEffect(() => {
         // Event listener for handling browser back button
@@ -23,14 +26,27 @@ export default function CreateServiceOffer({aChat}) {
     }, []);
 
     const handleCreateOfferClick = () => {
+        
         // Push a new state into the history when showing ChooseServiceOffer
         window.history.pushState({ showAnotherComponent: true }, '');
         setShowAnotherComponent(true);
     };
 
+    useEffect(() => {
+        const chatId = localStorage.getItem('chatId');
+        if (chatId !== null && chatId !== undefined) {
+          setActiveChat(chatId);
+        }
+      }, []);
+      
+      useEffect(() => {
+        console.log(activeChat);
+      }, [activeChat]);
+
     if (showAnotherComponent) {
-        return <ChooseServiceOffer aChat={aChat}/>;
+        return <ChooseServiceOffer aChat={activeChat}/>;
     }
+    
 
     // Otherwise, render the button to create an offer
     return (
