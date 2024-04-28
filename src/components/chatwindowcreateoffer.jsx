@@ -23,6 +23,7 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
     const parsedUser = JSON.parse(storedUser);
 
     console.log(activeChat);
+    // 
 
     const openModal = () => {
         setModalOpen(true);
@@ -51,13 +52,14 @@ export default function ChatWindowCreateOffer({ activeChat, onBack }) {
 
     useEffect(() => {
         if (activeChat) {
+            setAChat(activeChat._id)
+            localStorage.setItem('chatId', activeChat._id)
             const sse = new EventSource(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/chats/${activeChat._id}/sse`);
             setSseConnection(sse);
 
             sse.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                setMessages(data.messages);
-                setAChat(activeChat._id)
+                setMessages(data.messages);  
             };
 
             return () => {
