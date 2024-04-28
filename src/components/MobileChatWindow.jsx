@@ -51,6 +51,7 @@ export default function ChatWindow({ activeChat, onBack }) {
 
     useEffect(() => {
         if (activeChat) {
+            localStorage.setItem('chatId', activeChat._id)
             const sse = new EventSource(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/chats/${activeChat._id}/sse`);
             setSseConnection(sse);
 

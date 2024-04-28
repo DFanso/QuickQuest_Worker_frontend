@@ -79,7 +79,7 @@ export default function SendServiceOffer({ service, onClose, aChat }) {
                     break;
             }
 
-            const response = await axios.post('https://api.quick-quest.dfanso.dev/v1/offers', {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/v1/offers`, {
                 service: service._id,
                 price: price,
                 description: description,
@@ -141,8 +141,12 @@ export default function SendServiceOffer({ service, onClose, aChat }) {
 
     const handlePriceChange = (e) => {
         const value = parseInt(e.target.value);
-        if (!isNaN(value) && value >= service.startingPrice) {
-            setPrice(value);
+        if (!isNaN(value)) {
+            if (value > service.startingPrice) {
+                setPrice(value);
+            } else {
+                setPrice(service.startingPrice);
+            }
         }
     };
 
@@ -202,7 +206,7 @@ export default function SendServiceOffer({ service, onClose, aChat }) {
                 </div>
 
                 <div className="w-1/2 mr-2">
-                    <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price</label>
+                    <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price $</label>
                     <input
                         type="number"
                         id="price"
